@@ -5,7 +5,7 @@ Para iniciar o projeto, basta clonar o repositório:
 ```bash
 https://github.com/Dev-eduardo-MB/Company-Employee-Management-Fullstack.git
 ```
-após garantir que o `Docker` esteja instalado na máquina e execute na raiz do projeto: 
+após garantir que o `Docker` esteja instalado na máquina execute na raiz do projeto: 
 ```bash 
 docker compose up -d
 ```
@@ -124,3 +124,4 @@ A aplicação utiliza rotas com `loadComponent` e estrutura modular.
 
 ### Fallback
 - `**` → redireciona para `/home`
+
