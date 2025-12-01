@@ -1,0 +1,20 @@
+$page-bg: #F4F7FA;
+
+.layout {
+  display: flex;
+  background: $page-bg;
+}
+
+.content {
+  margin-left: 240px; 
+  width: calc(100% - 240px);
+
+  padding: 40px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1200px;
+}

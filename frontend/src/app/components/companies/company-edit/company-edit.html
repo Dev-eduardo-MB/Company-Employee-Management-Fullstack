@@ -1,0 +1,72 @@
+<div class="page">
+  <div class="card">
+
+    <h2 class="title">Editar empresa</h2>
+
+    <form [formGroup]="form" class="form">
+
+    
+      <div class="form-group">
+        <label>*Nome:</label>
+        <input formControlName="name">
+        <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          Nome é obrigatório.
+        </div>
+      </div>
+
+     
+      <div class="form-group">
+        <label>*CNPJ:</label>
+        <input formControlName="cnpj">
+
+       
+        <div class="error" *ngIf="form.get('cnpj')?.touched && form.get('cnpj')?.hasError('required')">
+          CNPJ é obrigatório.
+        </div>
+
+       
+        <div class="error" *ngIf="form.get('cnpj')?.touched && form.get('cnpj')?.hasError('invalidLength')">
+         O CNPJ deve ter exatamente 14 dígitos.
+        </div>
+
+
+        <div class="error" *ngIf="form.get('cnpj')?.hasError('exists')">
+          Este CNPJ já existe.
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label>*Endereço:</label>
+        <input formControlName="address">
+        <div class="error" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">
+          Endereço é obrigatório.
+        </div>
+      </div>
+
+     
+      <h3>Vincular/Desvincular Funcionarios</h3>
+
+      <div class="company-list">
+        <label *ngFor="let emp of employees">
+          <input
+            type="checkbox"
+            [checked]="form.value.employees.includes(emp.id)"
+            (change)="toggleEmployee(emp.id, $event)"
+          >
+          {{ emp.name }} ({{ emp.cpf }})
+        </label>
+      </div>
+
+      <hr>
+
+    
+      <div class="actions">
+        <button class="btn primary" type="button" (click)="save()">Save</button>
+        <button type="button" class="btn" (click)="cancel()">Cancel</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

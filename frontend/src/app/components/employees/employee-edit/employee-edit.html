@@ -1,0 +1,106 @@
+<div class="page">
+  <div class="card">
+
+    <h2 class="title">Editar funcionário</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="form">
+
+     
+      <div class="form-group">
+        <label>*Login</label>
+        <input type="text" formControlName="login" />
+
+        <small class="error" *ngIf="form.get('login')?.hasError('required') && form.get('login')?.touched">
+          Login é obrigatório.
+        </small>
+
+        <small class="error" *ngIf="form.get('login')?.hasError('pattern') && form.get('login')?.touched">
+          Apenas letras, números, _ e - são permitidos.
+        </small>
+
+        <small class="error" *ngIf="form.get('login')?.hasError('exists')">
+          Este login já está em uso.
+        </small>
+      </div> 
+
+     
+      <div class="form-group">
+        <label>*Nome</label>
+        <input type="text" formControlName="name" />
+
+        <small class="error" *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
+          Nome é obrigatório.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>*CPF</label>
+        <input type="text" formControlName="cpf" />
+
+        <small class="error" *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.touched">
+          CPF é obrigatório.
+        </small>
+
+        <small class="error" *ngIf="form.get('cpf')?.hasError('invalidLength')">
+          O CPF deve conter exatamente 11 digitos.
+        </small>
+
+        <small class="error" *ngIf="form.get('cpf')?.hasError('exists')">
+          Este CPF já existe.
+        </small>
+      </div>
+
+   
+      <div class="form-group">
+        <label>*Email</label>
+        <input type="email" formControlName="email" />
+
+        <small class="error" *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">
+          Email é obrigatório.
+        </small>
+
+        <small class="error" *ngIf="form.get('email')?.hasError('email')">
+          Formato invalio.
+        </small>
+
+        <small class="error" *ngIf="form.get('email')?.hasError('exists')">
+          Este Email já esta em uso.
+        </small>
+      </div>
+
+    
+      <div class="form-group">
+        <label>Senha (deixe vazio para manter a atual)</label>
+        <input type="password" formControlName="password" />
+
+        <small class="error" *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.touched">
+          A senha deve conter pelo menos 6 digitos.
+        </small>
+      </div>
+
+      
+      <div class="form-group">
+        <label>Vincular/Desvincular Empresas</label>
+
+        <div class="company-list">
+          <label *ngFor="let company of companies">
+            <input
+              type="checkbox"
+              [checked]="form.value.company_ids.includes(company.id)"
+              (change)="toggleCompany(company.id)"
+            />
+            {{ company.name }}
+          </label>
+        </div>
+      </div>
+
+      
+      <div class="actions">
+        <button class="btn outline" type="button" (click)="cancel()">Cancel</button>
+        <button class="btn primary" type="submit" [disabled]="loading">Save</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

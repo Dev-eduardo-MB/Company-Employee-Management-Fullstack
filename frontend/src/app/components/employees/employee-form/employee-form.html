@@ -1,0 +1,153 @@
+<div class="page">
+  <div class="card">
+
+    <h2 class="title">Cadastro de Funcionários</h2>
+
+    <form class="form" [formGroup]="form">
+
+  
+      <div class="form-group">
+        <label>*Login</label>
+        <input 
+          type="text" 
+          formControlName="login" 
+          placeholder="Enter login"
+        >
+
+        
+        <div class="error" *ngIf="form.get('login')?.touched && form.get('login')?.hasError('required')">
+          Login é obrigatório.
+        </div>
+
+       
+        <div class="error" *ngIf="form.get('login')?.touched && form.get('login')?.hasError('pattern')">
+          Apenas letras, números, _ e - são permitidos.
+        </div>
+
+       
+        <div class="error" *ngIf="form.get('login')?.hasError('exists')">
+          Este login já existe.
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>*Nome</label>
+        <input 
+          type="text" 
+          formControlName="name" 
+          placeholder="Enter full name"
+        >
+
+        <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
+          Nome é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>*CPF</label>
+      
+        <input
+          type="text"
+          formControlName="cpf"
+          placeholder="000.000.000-00"
+          maxlength="14"
+          (input)="form.get('cpf')?.setValue($event.target.value.replace(/[^0-9]/g,''))"
+        >
+      
+        <div class="error" *ngIf="form.get('cpf')?.touched && form.get('cpf')?.hasError('required')">
+          CPF é obrigatório.
+        </div>
+      
+        <div class="error" *ngIf="form.get('cpf')?.hasError('invalidLength')">
+          CPF deve conter exatamente 11 dígitos.
+        </div>
+      
+        <div class="error" *ngIf="form.get('cpf')?.hasError('exists')">
+          Este CPF já existe.
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>*Email</label>
+
+        <input 
+          type="email" 
+          formControlName="email" 
+          placeholder="example@domain.com"
+        >
+
+    
+        <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
+          Email é obrigatório.
+        </div>
+
+     
+        <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')">
+          Formato invalio.
+        </div>
+
+        
+        <div class="error" *ngIf="form.get('email')?.hasError('exists')">
+          Este Email já esta em uso.
+        </div>
+      </div>
+
+
+      
+      <div class="form-group">
+        <label>*Senha</label>
+
+        <input 
+          type="password" 
+          formControlName="password" 
+          placeholder="Enter password"
+        >
+
+       
+        <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
+          Senha é obrigatório.
+        </div>
+
+        
+        <div class="error" *ngIf="form.get('password')?.hasError('minlength')">
+          A senha deve conter pelo menos 6 digitos.
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label>Vincular Empresas</label>
+
+        <div *ngIf="companies.length === 0">
+          <input type="text" value="No companies registered" disabled/>
+        </div>
+
+        <div class="employee-list" *ngIf="companies.length > 0">
+          <div *ngFor="let comp of companies">
+            <label>
+              <input 
+                type="checkbox"
+                [value]="comp.id"
+                (change)="toggleCompany(comp.id, $event)"
+              >
+              {{ comp.name }} — {{ comp.cnpj }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="actions">
+        <button type="button" class="btn primary" (click)="save()" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save' }}
+        </button>
+
+        <button type="button" class="btn" (click)="cancel()">Cancel</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="page">
+
+  <div class="card">
+    <h2 class="title">Funcionários cadastrados</h2>
+
+    <button class="btn primary new-btn" [routerLink]="['/employees/new']">
+      Adicionar funcionário
+    </button>
+
+    <div *ngIf="loading" class="loading">
+      Carregando Funcionários...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <table class="table" *ngIf="!loading && employees.length > 0">
+      <thead>
+        <tr>
+          <th class="th">Login</th>
+          <th class="th">Nome</th>
+          <th class="th">Email</th>
+          <th class="th">CPF</th>
+          <th class="th">Empresas</th>
+          <th class="th">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of employees">
+          <td>{{ e.login }}</td>
+          <td>{{ e.name }}</td>
+          <td>{{ e.email }}</td>
+          <td>{{ e.cpf }}</td>
+
+          <td>
+            <span *ngIf="e.companies?.length === 0"></span>
+            <span *ngFor="let c of e.companies; let i = index">
+              {{ c.name }}<span *ngIf="i < e.companies.length - 1">, </span>
+            </span>
+          </td>
+
+          <td class="actions">
+            <button class="btn primary" [routerLink]="['/employees', e.id]">
+              Edit
+            </button>
+
+            <button class="btn danger" (click)="deleteEmployee(e.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!loading && employees.length === 0" class="empty">
+      Nenhum funcionário cadastrado.
+    </div>
+
+  </div>
+</div>
